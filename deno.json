@@ -1,0 +1,31 @@
+{
+  "imports": {
+    "#server/": "./src/",
+    "@hono/zod-validator": "npm:@hono/zod-validator@^0.7.6",
+    "@libsql/client": "npm:@libsql/client@^0.17.2",
+    "@upstash/redis": "npm:@upstash/redis@^1.37.0",
+    "better-auth": "npm:better-auth@^1.6.5",
+    "drizzle-kit": "npm:drizzle-kit@^0.31.10",
+    "drizzle-orm": "npm:drizzle-orm@^0.45.2",
+    "effect": "npm:effect@^3.21.1",
+    "hono": "jsr:@hono/hono@^4.12.14",
+    "zod": "npm:zod@^4.3.6"
+  },
+  "tasks": {
+    "dev": "deno run --watch -A --sloppy-imports --env src/main.ts"
+  },
+  "nodeModulesDir": "auto",
+  "compilerOptions": {
+    "strict": true,
+    "jsx": "precompile",
+    "jsxImportSource": "hono/jsx",
+    "types": [
+      "./src/app.d.ts"
+    ],
+    "paths": {
+      "#server/*": [
+        "src/*"
+      ]
+    }
+  }
+}
