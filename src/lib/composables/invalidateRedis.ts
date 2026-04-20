@@ -1,4 +1,4 @@
-import { backendCache } from "#server/lib/redis/server";
+import { backendCache } from "#server/lib/redis/server.ts";
 
 export async function invalidateUserCache(
   userId: string,

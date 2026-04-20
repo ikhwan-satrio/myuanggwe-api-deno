@@ -12,7 +12,7 @@
     "zod": "npm:zod@^4.3.6"
   },
   "tasks": {
-    "dev": "deno run --watch -A --sloppy-imports --env src/main.ts"
+    "dev": "deno run --watch -A --env src/main.ts"
   },
   "nodeModulesDir": "auto",
   "compilerOptions": {
