@@ -16,7 +16,7 @@ export const orgsGroups = new Hono()
     try {
       const org = await auth.api.createOrganization({
         body: { name: body.name, slug: body.slug, userId: user.id },
-        headers: c.req.raw.headers as any,
+        headers: c.req.raw.headers,
       });
       await invalidateUserCache(user.id);
       return c.json({ success: true, organization: org });
@@ -46,7 +46,7 @@ export const orgsGroups = new Hono()
           role: body.role,
           organizationId: activeOrg.id,
         },
-        headers: c.req.raw.headers as any,
+        headers: c.req.raw.headers,
       });
       return c.json({ success: true, message: "Undangan berhasil dikirim" });
     } catch (e) {
@@ -64,7 +64,7 @@ export const orgsGroups = new Hono()
     try {
       await auth.api.acceptInvitation({
         body: { invitationId: body.invitationId },
-        headers: c.req.raw.headers as any,
+        headers: c.req.raw.headers,
       });
       await invalidateUserCache(user.id);
       return c.json({
@@ -87,7 +87,7 @@ export const orgsGroups = new Hono()
     try {
       await auth.api.setActiveOrganization({
         body: { organizationId: targetOrgId },
-        headers: c.req.raw.headers as any,
+        headers: c.req.raw.headers,
       });
       await invalidateUserCache(user.id, targetOrgId);
       return c.json({
