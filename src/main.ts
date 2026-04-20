@@ -12,9 +12,9 @@ import {
 import { goalsGroup } from "#server/lib/groups/goals";
 import { orgsGroups } from "#server/lib/groups/orgs/switch";
 import { manageOrgsGroup } from "#server/lib/groups/orgs/manage";
-import { auth } from "./lib/auth/auth";
-import { betterAuthMiddleware } from "./lib/middlewares/better-auth";
-import { userDataMiddleware } from "./lib/middlewares/user-data";
+import { auth } from "#server/lib/auth/auth";
+import { betterAuthMiddleware } from "#server/lib/middlewares/better-auth";
+import { userDataMiddleware } from "#server/lib/middlewares/user-data";
 
 const app = new Hono().basePath("/api")
   .use(

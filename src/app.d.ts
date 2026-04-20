@@ -1,49 +1,51 @@
 // src/types/db.d.ts
 import type {
+  BudgetType,
+  CategoryType,
+  FinancialGoalType,
   OrganizationType,
+  RecurringTransactionType,
+  TransactionType,
   UserType,
   WalletType,
-  CategoryType,
-  TransactionType,
-  BudgetType,
-  RecurringTransactionType,
-  FinancialGoalType,
-} from '#server/lib/db/schema';
+} from "#server/lib/db/schema";
 
 // ============= RE-EXPORT BASE TYPES =============
 
 export type {
+  BudgetType,
+  CategoryType,
+  FinancialGoalType,
   OrganizationType,
+  RecurringTransactionType,
+  TransactionType,
   UserType,
   WalletType,
-  CategoryType,
-  TransactionType,
-  BudgetType,
-  RecurringTransactionType,
-  FinancialGoalType,
 };
 
 // ============= INSERT TYPES =============
 
 import type {
-  wallets,
-  categories,
-  transactions,
   budgets,
-  recurringTransactions,
+  categories,
   financialGoals,
-  organization,
-  user,
-  member,
   invitation,
-} from '#server/lib/db/schema';
-import type { InferInsertModel } from 'drizzle-orm';
+  member,
+  organization,
+  recurringTransactions,
+  transactions,
+  user,
+  wallets,
+} from "#server/lib/db/schema";
+import type { InferInsertModel } from "drizzle-orm";
 
 export type InsertWallet = InferInsertModel<typeof wallets>;
 export type InsertCategory = InferInsertModel<typeof categories>;
 export type InsertTransaction = InferInsertModel<typeof transactions>;
 export type InsertBudget = InferInsertModel<typeof budgets>;
-export type InsertRecurringTransaction = InferInsertModel<typeof recurringTransactions>;
+export type InsertRecurringTransaction = InferInsertModel<
+  typeof recurringTransactions
+>;
 export type InsertFinancialGoal = InferInsertModel<typeof financialGoals>;
 export type InsertOrganization = InferInsertModel<typeof organization>;
 export type InsertUser = InferInsertModel<typeof user>;
@@ -118,12 +120,16 @@ export type OrganizationWithRelations = OrganizationType & {
 
 // ============= ENUMS =============
 
-export type TransactionType_ = 'income' | 'expense' | 'transfer';
-export type BudgetPeriod = 'monthly' | 'yearly';
-export type RecurringFrequency = 'daily' | 'weekly' | 'monthly' | 'yearly';
-export type WalletType_ = 'cash' | 'bank' | 'e-wallet' | 'investment' | string;
-export type MemberRole = 'owner' | 'admin' | 'member';
-export type InvitationStatus = 'pending' | 'accepted' | 'rejected' | 'cancelled';
+export type TransactionType_ = "income" | "expense" | "transfer";
+export type BudgetPeriod = "monthly" | "yearly";
+export type RecurringFrequency = "daily" | "weekly" | "monthly" | "yearly";
+export type WalletType_ = "cash" | "bank" | "e-wallet" | "investment" | string;
+export type MemberRole = "owner" | "admin" | "member";
+export type InvitationStatus =
+  | "pending"
+  | "accepted"
+  | "rejected"
+  | "cancelled";
 
 // ============= PARTIAL / UPDATE TYPES =============
 
@@ -131,19 +137,21 @@ export type UpdateWallet = Partial<InsertWallet> & { id: string };
 export type UpdateCategory = Partial<InsertCategory> & { id: string };
 export type UpdateTransaction = Partial<InsertTransaction> & { id: string };
 export type UpdateBudget = Partial<InsertBudget> & { id: string };
-export type UpdateRecurringTransaction = Partial<InsertRecurringTransaction> & { id: string };
+export type UpdateRecurringTransaction = Partial<InsertRecurringTransaction> & {
+  id: string;
+};
 export type UpdateFinancialGoal = Partial<InsertFinancialGoal> & { id: string };
 
 // ============= HONO CONTEXT VARIABLES =============
 
-declare module 'hono' {
+declare module "hono" {
   interface ContextVariableMap {
-    user: import("better-auth").User,
-    session: import('better-auth').Session | null
+    user: import("better-auth").User;
+    session: import("better-auth").Session | null;
     activeOrg: OrganizationType | null;
     organizations: OrganizationType[];
     currentSession: { activeOrganizationId: string | null } | null | undefined;
   }
 }
 
-export { }
+export {};
