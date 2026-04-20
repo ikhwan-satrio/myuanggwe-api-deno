@@ -1,7 +1,7 @@
 import { and, desc, eq, gte, isNull, sql } from "drizzle-orm";
-import { db } from "#server/lib/db";
-import * as schema from "#server/lib/db/schema";
-import { withBackendCache } from "#server/lib/redis/server";
+import { db } from "#server/lib/db/index.ts";
+import * as schema from "#server/lib/db/schema.ts";
+import { withBackendCache } from "#server/lib/redis/server.ts";
 import { Hono } from "hono";
 
 export const dashboardGroup = new Hono()

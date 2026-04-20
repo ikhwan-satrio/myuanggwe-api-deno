@@ -1,8 +1,8 @@
 import { and, eq } from "drizzle-orm";
-import { db } from "#server/lib/db";
-import * as schema from "#server/lib/db/schema";
-import { invalidateUserCache } from "#server/lib/composables/invalidateRedis";
-import { auth } from "#server/lib/auth/auth";
+import { db } from "#server/lib/db/index.ts";
+import * as schema from "#server/lib/db/schema.ts";
+import { invalidateUserCache } from "#server/lib/composables/invalidateRedis.ts";
+import { auth } from "#server/lib/auth/auth.ts";
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";

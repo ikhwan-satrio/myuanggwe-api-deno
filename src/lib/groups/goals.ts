@@ -1,9 +1,9 @@
 import { and, eq, isNull } from "drizzle-orm";
-import { db } from "#server/lib/db";
-import * as schema from "#server/lib/db/schema";
-import { withBackendCache } from "#server/lib/redis/server";
-import { financialGoalSchema } from "#server/lib/schemas";
-import { invalidateUserCache } from "#server/lib/composables/invalidateRedis";
+import { db } from "#server/lib/db/index.ts";
+import * as schema from "#server/lib/db/schema.ts";
+import { withBackendCache } from "#server/lib/redis/server.ts";
+import { financialGoalSchema } from "#server/lib/schemas.ts";
+import { invalidateUserCache } from "#server/lib/composables/invalidateRedis.ts";
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";

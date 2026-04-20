@@ -2,9 +2,9 @@ import {
   inviteSchema,
   joinSchema,
   organizationSchema,
-} from "#server/lib/schemas";
-import { auth } from "#server/lib/auth/auth";
-import { invalidateUserCache } from "#server/lib/composables/invalidateRedis";
+} from "#server/lib/schemas.ts";
+import { auth } from "#server/lib/auth/auth.ts";
+import { invalidateUserCache } from "#server/lib/composables/invalidateRedis.ts";
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
 

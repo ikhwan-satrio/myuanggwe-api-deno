@@ -1,6 +1,6 @@
-import { withBackendCache } from "#server/lib/redis/server";
-import { db } from "#server/lib/db";
-import * as schema from "#server/lib/db/schema";
+import { withBackendCache } from "#server/lib/redis/server.ts";
+import { db } from "#server/lib/db/index.ts";
+import * as schema from "#server/lib/db/schema.ts";
 import { eq } from "drizzle-orm";
 import { auth } from "../auth/auth.ts";
 import { createMiddleware } from "hono/factory";

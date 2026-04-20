@@ -1,20 +1,20 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
-import { dashboardGroup } from "#server/lib/groups/dashboard";
-import { walletsGroup } from "#server/lib/groups/wallets";
-import { transactionsGroup } from "#server/lib/groups/transactions";
-import { categoriesGroup } from "#server/lib/groups/categories";
-import { budgetsGroup } from "#server/lib/groups/budgets";
+import { dashboardGroup } from "#server/lib/groups/dashboard.ts";
+import { walletsGroup } from "#server/lib/groups/wallets.ts";
+import { transactionsGroup } from "#server/lib/groups/transactions.ts";
+import { categoriesGroup } from "#server/lib/groups/categories.ts";
+import { budgetsGroup } from "#server/lib/groups/budgets.ts";
 import {
   processRecurringTransactions,
   recurringGroup,
-} from "#server/lib/groups/recurring";
-import { goalsGroup } from "#server/lib/groups/goals";
-import { orgsGroups } from "#server/lib/groups/orgs/switch";
-import { manageOrgsGroup } from "#server/lib/groups/orgs/manage";
-import { auth } from "#server/lib/auth/auth";
-import { betterAuthMiddleware } from "#server/lib/middlewares/better-auth";
-import { userDataMiddleware } from "#server/lib/middlewares/user-data";
+} from "#server/lib/groups/recurring.ts";
+import { goalsGroup } from "#server/lib/groups/goals.ts";
+import { orgsGroups } from "#server/lib/groups/orgs/switch.ts";
+import { manageOrgsGroup } from "#server/lib/groups/orgs/manage.ts";
+import { auth } from "#server/lib/auth/auth.ts";
+import { betterAuthMiddleware } from "#server/lib/middlewares/better-auth.ts";
+import { userDataMiddleware } from "#server/lib/middlewares/user-data.ts";
 
 const app = new Hono().basePath("/api")
   .use(
@@ -29,31 +29,23 @@ const app = new Hono().basePath("/api")
       allowHeaders: ["Content-Type", "Authorization"],
     }),
   )
-  // auth handler harus sebelum middleware lain
   .on(["POST", "GET"], "/auth/*", (c) => {
     return auth.handler(c.req.raw);
   })
   .use("*", betterAuthMiddleware)
   .use("*", userDataMiddleware)
-  // layout route
   .get("/layout", async (c) => {
     const user = c.get("user");
     const authSession = c.get("session");
     const activeOrg = c.get("activeOrg");
     const organizations = c.get("organizations");
-
     if (!authSession) {
       return c.json({ user: null, activeOrg: null, organizations: [] });
     }
-
-    await processRecurringTransactions(user.id, activeOrg?.id);
+    await processRecurringTransactions(user!.id, activeOrg?.id);
     return c.json({ user, session: authSession, organizations, activeOrg });
   })
-  // health
-  .get("/health", (c) => {
-    return c.text("ok");
-  })
-  // route groups — pakai .route() bukan .use()
+  .get("/health", (c) => c.text("ok"))
   .route("/orgs", orgsGroups)
   .route("/dashboard", dashboardGroup)
   .route("/wallets", walletsGroup)
