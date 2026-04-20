@@ -25,8 +25,7 @@ const app = new Hono().basePath("/api")
         "https://myuanggwe.vercel.app",
       ],
       allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-      credentials: true,
-      allowHeaders: ["Content-Type", "Authorization"],
+      allowHeaders: ["Content-Type", "Authorization","Cookie"],
     }),
   )
   .on(["POST", "GET"], "/auth/*", (c) => {
