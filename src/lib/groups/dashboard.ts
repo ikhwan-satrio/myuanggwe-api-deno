@@ -14,6 +14,10 @@ export const dashboardGroup = new Hono()
       ? `dashboard:org:${orgId}`
       : `dashboard:user:${userId}`;
 
+    if (!user) {
+      return c.json({ error: "Unauthorized" }, 401);
+    }
+
     try {
       const dashboardData = await withBackendCache(cacheKey, async () => {
         const startOfMonth = new Date();
