@@ -17,6 +17,17 @@ import { betterAuthMiddleware } from "#server/lib/middlewares/better-auth.ts";
 import { userDataMiddleware } from "#server/lib/middlewares/user-data.ts";
 
 const app = new Hono().basePath("/api")
+  .use(
+    "/auth/*",
+    cors({
+      origin: [
+        "http://localhost:5173",
+        "https://myuanggwe.vercel.app",
+      ],
+      allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+      allowHeaders: ["Content-Type", "Authorization", "Cookie"],
+    }),
+  )
   .on(["POST", "GET"], "/auth/*", (c) => {
     return auth.handler(c.req.raw);
   })
