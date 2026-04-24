@@ -19,14 +19,9 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
-  sessionCookie: {
-    name: "better-auth.session_token",
-    attributes: {
-      secure: true, // ✅ HTTPS only
-      sameSite: "None", // ✅ Allow cross-site
-      httpOnly: true,
-      path: "/",
-      domain: ".ikhwan-satrio.deno.net", // ✅ Optional: subdomain sharing
+  advanced: {
+    crossSubDomainCookies: {
+      enabled: true,
     },
   },
 });
