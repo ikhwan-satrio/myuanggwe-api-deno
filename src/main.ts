@@ -24,6 +24,7 @@ const app = new Hono().basePath("/api")
         "http://localhost:5173",
         "https://myuanggwe.vercel.app",
       ],
+      credentials: true,
       allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
       allowHeaders: ["Content-Type", "Authorization", "Cookie"],
     }),
