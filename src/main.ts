@@ -27,6 +27,7 @@ const app = new Hono().basePath("/api")
       allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
       allowHeaders: ["Content-Type", "Authorization", "Cookie"],
       credentials: true,
+      maxAge: Infinity,
     }),
   )
   .on(["POST", "GET"], "/auth/*", (c) => {
