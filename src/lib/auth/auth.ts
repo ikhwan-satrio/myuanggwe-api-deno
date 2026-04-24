@@ -20,8 +20,10 @@ export const auth = betterAuth({
     enabled: true,
   },
   advanced: {
-    crossSubDomainCookies: {
-      enabled: true,
-    },
-  },
+    defaultCookieAttributes: {
+      sameSite: "none",   // ✅ Cross-domain
+      secure: true,        // ✅ HTTPS
+      partitioned: true    // ✅ CHIPS - standar browser baru
+    }
+  }
 });
