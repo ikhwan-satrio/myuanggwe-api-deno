@@ -18,7 +18,7 @@ import { userDataMiddleware } from "#server/lib/middlewares/user-data.ts";
 
 const app = new Hono().basePath("/api")
   .use(
-    "/auth/*",
+    "*",
     cors({
       origin: [
         "http://localhost:5173",
