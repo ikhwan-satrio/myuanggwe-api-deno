@@ -16,6 +16,7 @@ import { auth } from "#server/lib/auth/auth.ts";
 import { betterAuthMiddleware } from "#server/lib/middlewares/better-auth.ts";
 import { userDataMiddleware } from "#server/lib/middlewares/user-data.ts";
 
+
 const app = new Hono().basePath("/api")
   .use(
     "*",
