@@ -15,7 +15,7 @@ import { manageOrgsGroup } from "#server/lib/groups/orgs/manage.ts";
 import { auth } from "#server/lib/auth/auth.ts";
 import { betterAuthMiddleware } from "#server/lib/middlewares/better-auth.ts";
 import { userDataMiddleware } from "#server/lib/middlewares/user-data.ts";
-import { yoga } from "#server/lib/db/index.ts";
+import { yoga } from "#server/lib/graphql/index.ts";
 
 const app = new Hono().basePath("/api");
 

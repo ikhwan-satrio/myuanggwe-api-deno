@@ -1,7 +1,6 @@
+// src/lib/db/index.ts - HANYA db
 import { drizzle } from "drizzle-orm/libsql";
 import { createClient } from "@libsql/client";
-import { buildSchema } from "drizzle-graphql";
-import { createYoga } from "graphql-yoga";
 import * as DBschema from "./schema.ts";
 
 const client = createClient({
@@ -10,10 +9,3 @@ const client = createClient({
 });
 
 export const db = drizzle(client, { schema: DBschema });
-
-const { schema } = buildSchema(db);
-export const yoga = createYoga({
-  schema,
-  graphqlEndpoint: "/api/graphql",
-  landingPage: true,
-});
