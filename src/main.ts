@@ -15,47 +15,57 @@ import { manageOrgsGroup } from "#server/lib/groups/orgs/manage.ts";
 import { auth } from "#server/lib/auth/auth.ts";
 import { betterAuthMiddleware } from "#server/lib/middlewares/better-auth.ts";
 import { userDataMiddleware } from "#server/lib/middlewares/user-data.ts";
+import { yoga } from "#server/lib/db/index.ts";
 
+const app = new Hono().basePath("/api");
 
-const app = new Hono().basePath("/api")
-  .use(
-    "*",
-    cors({
-      origin: [
-        "http://localhost:5173",
-        "https://myuanggwe.vercel.app",
-      ],
-      allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-      allowHeaders: ["Content-Type", "Authorization", "Cookie"],
-      credentials: true,
-      maxAge: Infinity,
-    }),
-  )
-  .on(["POST", "GET"], "/auth/*", (c) => {
-    return auth.handler(c.req.raw);
-  })
-  .use("*", betterAuthMiddleware)
-  .use("*", userDataMiddleware)
-  .get("/layout", async (c) => {
-    const user = c.get("user");
-    const authSession = c.get("session");
-    const activeOrg = c.get("activeOrg");
-    const organizations = c.get("organizations");
-    if (!authSession) {
-      return c.json({ user: null, activeOrg: null, organizations: [] });
-    }
-    await processRecurringTransactions(user!.id, activeOrg?.id);
-    return c.json({ user, session: authSession, organizations, activeOrg });
-  })
-  .get("/health", (c) => c.text("ok"))
-  .route("/orgs", orgsGroups)
-  .route("/dashboard", dashboardGroup)
-  .route("/wallets", walletsGroup)
-  .route("/transactions", transactionsGroup)
-  .route("/categories", categoriesGroup)
-  .route("/manage-orgs", manageOrgsGroup)
-  .route("/budgets", budgetsGroup)
-  .route("/recurring", recurringGroup)
-  .route("/goals", goalsGroup);
+app.use(
+  "*",
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://myuanggwe.vercel.app",
+    ],
+    allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowHeaders: ["Content-Type", "Authorization", "Cookie"],
+    credentials: true,
+    maxAge: Infinity,
+  }),
+);
+
+app.on(["POST", "GET"], "/auth/*", (c) => {
+  return auth.handler(c.req.raw);
+});
+
+app.use("*", betterAuthMiddleware);
+app.use("*", userDataMiddleware);
+
+app.on(["POST", "GET"], "/graphql", async (c) => {
+  return await yoga.fetch(c.req.raw);
+});
+
+app.get("/layout", async (c) => {
+  const user = c.get("user");
+  const authSession = c.get("session");
+  const activeOrg = c.get("activeOrg");
+  const organizations = c.get("organizations");
+  if (!authSession) {
+    return c.json({ user: null, activeOrg: null, organizations: [] });
+  }
+  await processRecurringTransactions(user!.id, activeOrg?.id);
+  return c.json({ user, session: authSession, organizations, activeOrg });
+});
+
+app.get("/health", (c) => c.text("ok"));
+app.route("/orgs", orgsGroups);
+
+app.route("/dashboard", dashboardGroup);
+app.route("/wallets", walletsGroup);
+app.route("/transactions", transactionsGroup);
+app.route("/categories", categoriesGroup);
+app.route("/manage-orgs", manageOrgsGroup);
+app.route("/budgets", budgetsGroup);
+app.route("/recurring", recurringGroup);
+app.route("/goals", goalsGroup);
 
 Deno.serve(app.fetch);
