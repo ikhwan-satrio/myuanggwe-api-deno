@@ -39,8 +39,9 @@ app.use(
 // app.use("*", betterAuthMiddleware);
 // app.use("*", userDataMiddleware);
 
-app.on(["POST", "GET"], "/graphql", async (c) => {
-  return await yoga.fetch(c.req.raw);
+app.on(["POST", "GET"], "/graphql", (c) => {
+  // @ts-ignore
+  return yoga.handle(c.req, {});
 });
 
 app.get("/health", (c) => c.text("ok"));
