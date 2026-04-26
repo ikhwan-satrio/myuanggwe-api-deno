@@ -10,7 +10,7 @@
     "drizzle-orm": "npm:drizzle-orm@^0.45.2",
     "effect": "npm:effect@^3.21.1",
     "graphql": "npm:graphql@^16.13.2",
-    "graphql-yoga": "npm:graphql-yoga@^5.21.0",
+    "graphql-http": "npm:graphql-http@^1.22.4",
     "hono": "jsr:@hono/hono@^4.12.14",
     "zod": "npm:zod@^4.3.6"
   },

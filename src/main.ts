@@ -12,7 +12,7 @@ import { cors } from "hono/cors";
 // import { goalsGroup } from "#server/lib/groups/goals.ts";
 // import { orgsGroups } from "#server/lib/groups/orgs/switch.ts";
 // import { manageOrgsGroup } from "#server/lib/groups/orgs/manage.ts";
-import { yoga } from "#server/lib/graphql/index.ts";
+import { graphqlHandler } from "#server/lib/graphql/index.ts";
 // import { auth } from "#server/lib/auth/auth.ts";
 // import { betterAuthMiddleware } from "#server/lib/middlewares/better-auth.ts";
 // import { userDataMiddleware } from "#server/lib/middlewares/user-data.ts";
@@ -40,8 +40,7 @@ app.use(
 // app.use("*", userDataMiddleware);
 
 app.on(["POST", "GET"], "/graphql", (c) => {
-  // @ts-ignore
-  return yoga.handle(c.req, {});
+  return graphqlHandler(c.req.raw as unknown as Request);
 });
 
 app.get("/health", (c) => c.text("ok"));
