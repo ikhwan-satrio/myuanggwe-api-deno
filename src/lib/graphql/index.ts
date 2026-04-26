@@ -1,11 +1,19 @@
 import { buildSchema } from "drizzle-graphql";
 import { createYoga } from "graphql-yoga";
-import { db } from "#server/lib/db/index.ts";
+import { getDb } from "#server/lib/db/index.ts"; // Use getDb()
 
-const { schema } = buildSchema(db);
+let _yogaInstance: ReturnType<typeof createYoga> | undefined;
 
-export const yoga = createYoga({
-  schema,
-  graphqlEndpoint: "/api/graphql",
-  landingPage: true,
-});
+export function getYogaInstance() {
+  if (!_yogaInstance) {
+    const { schema } = buildSchema(getDb()); // Use getDb() here
+    _yogaInstance = createYoga({
+      schema,
+      graphqlEndpoint: "/api/graphql",
+      landingPage: true,
+    });
+  }
+  return _yogaInstance;
+}
+
+export const yoga = getYogaInstance();

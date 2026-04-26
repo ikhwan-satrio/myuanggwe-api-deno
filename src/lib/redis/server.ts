@@ -2,10 +2,19 @@ import { Redis } from "@upstash/redis";
 import type { DurationInput } from "effect/Duration";
 import { Duration } from "effect";
 
-const redis = new Redis({
-  url: Deno.env.get("UPSTASH_REDIS_REST_URL"),
-  token: Deno.env.get("UPSTASH_REDIS_REST_TOKEN"),
-});
+let _redis: Redis | undefined;
+
+export function getRedis() {
+  if (!_redis) {
+    _redis = new Redis({
+      url: Deno.env.get("UPSTASH_REDIS_REST_URL"),
+      token: Deno.env.get("UPSTASH_REDIS_REST_TOKEN"),
+    });
+  }
+  return _redis;
+}
+
+export const redis = getRedis();
 
 // Vite-style colors
 const colors = {
