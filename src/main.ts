@@ -13,7 +13,7 @@ import { cors } from "hono/cors";
 // import { orgsGroups } from "#server/lib/groups/orgs/switch.ts";
 // import { manageOrgsGroup } from "#server/lib/groups/orgs/manage.ts";
 import { yoga } from "#server/lib/graphql/index.ts";
-import { auth } from "#server/lib/auth/auth.ts";
+// import { auth } from "#server/lib/auth/auth.ts";
 // import { betterAuthMiddleware } from "#server/lib/middlewares/better-auth.ts";
 // import { userDataMiddleware } from "#server/lib/middlewares/user-data.ts";
 
@@ -32,9 +32,9 @@ app.use(
   }),
 );
 
-app.on(["POST", "GET"], "/auth/*", (c) => {
-  return auth.handler(c.req.raw);
-});
+// app.on(["POST", "GET"], "/auth/*", (c) => {
+//   return auth.handler(c.req.raw);
+// });
 
 // app.use("*", betterAuthMiddleware);
 // app.use("*", userDataMiddleware);
